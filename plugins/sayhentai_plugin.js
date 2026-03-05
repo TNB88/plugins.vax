@@ -6,7 +6,7 @@ function getManifest() {
     return JSON.stringify({
         "id": "sayhentai",
         "name": "SayHentai",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "baseUrl": "https://sayhentai.vc",
         "iconUrl": "https://sayhentai.vc/apple-touch-icon.png",
         "isEnabled": true,
