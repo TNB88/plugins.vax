@@ -708,8 +708,7 @@ function parseDetailResponse(html) {
     if (movieDetail && movieDetail.id) {
         subtitles.push({
             url: "subtitlecat://" + movieDetail.id + "?domain=https://www.subtitlecat.com",
-            language: "Vietnamese (SubtitleCat)",
-            format: "srt"
+            lang: "Vietnamese (SubtitleCat)"
         });
     }
 
