@@ -6,7 +6,7 @@ function getManifest() {
     return JSON.stringify({
         "id": "missav",
         "name": "MissAV",
-        "version": "1.0.4",
+        "version": "1.0.3",
         "baseUrl": "https://missav.ai",
         "iconUrl": "https://stpaulclinic.vn/vaapp/plugins/missav.ico",
         "isEnabled": true,

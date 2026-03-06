@@ -6,7 +6,7 @@ function getManifest() {
     return JSON.stringify({
         "id": "clbpx",
         "name": "CLB Phim Xưa",
-        "version": "1.0.2",
+        "version": "1.0.4",
         "baseUrl": "https://clbphimxua.com",
         "iconUrl": "https://raw.githubusercontent.com/youngbi/repo/main/plugins/clbpx.ico",
         "isEnabled": true,
@@ -165,8 +165,8 @@ function parseSearchResponse(htmlResponse) {
 
 function parseMovieDetail(htmlResponse) {
     try {
-        var id = "unknown";
-        var title = "Unknown";
+        var id = "";
+        var title = "";
         var posterUrl = "";
         var description = "";
 
@@ -202,61 +202,128 @@ function parseMovieDetail(htmlResponse) {
         var yearMatch = title.match(/(19\d{2}|20\d{2})/);
         if (yearMatch) year = parseInt(yearMatch[1], 10);
 
-        // Find episode links
-        // We look for links pointing to clbpx.html
+        // Find episode links grouped by server sections
+        // HTML structure: <b>(Lồng Tiếng)<br>..links..</b> <b>(Phụ Đề)<br>..links..</b>
         var servers = [];
-        var episodes = [];
 
-        var linkRegex = /<a href="https?:\/\/clbphimxua\.com\/clbpx\.html\?v=([a-zA-Z0-9_-]+)"[^>]*>(?:.*?Tập (\d+)|.*?<img.*?play.*?>|.*?)<\/a>/gi;
-        var matches;
+        // Detect server sections by looking for <b> tags containing server names
+        var contentArea = "";
+        var contentMatch = htmlResponse.match(/<div class="sigle-post-content-area">([\s\S]*?)<\/div>/i);
+        if (contentMatch) {
+            contentArea = contentMatch[1];
+        } else {
+            contentArea = htmlResponse;
+        }
 
-        // Check for episodes list
-        var allLinksRegex = /<a href="(https?:\/\/clbphimxua\.com\/clbpx\.html\?v=[a-zA-Z0-9_-]+)"[^>]*>(?:.*?Tập (\d+)|.*?<img.*?play.*?>|.*?)<\/a>/gi;
-        var lMatch;
-        var epCount = 1;
-        while ((lMatch = allLinksRegex.exec(htmlResponse)) !== null) {
-            var epUrl = lMatch[1];
-            var epLabel = "";
+        // Known server name patterns
+        var serverPatterns = [
+            { pattern: /\(L\u1ed3ng Ti\u1ebfng\)/gi, name: "Lồng Tiếng" },
+            { pattern: /\(L&#7891;ng Ti&#7871;ng\)/gi, name: "Lồng Tiếng" },
+            { pattern: /\(Ph\u1ee5 \u0110\u1ec1\)/gi, name: "Phụ Đề" },
+            { pattern: /\(Ph&#7909; &#272;&#7873;\)/gi, name: "Phụ Đề" },
+            { pattern: /\(Thuy\u1ebft Minh\)/gi, name: "Thuyết Minh" },
+            { pattern: /\(Thuy&#7871;t Minh\)/gi, name: "Thuyết Minh" }
+        ];
 
-            // Try extracting from the tag text if not matching the play image
-            if (lMatch[0].indexOf('<img') === -1) {
-                epLabel = lMatch[0].replace(/<[^>]+>/g, '').trim();
+        // Try splitting content by <b> sections containing server names
+        // Strategy: find each <b>...</b> block, detect server name, parse links inside
+        var boldSections = [];
+        var boldRegex = /<b[^>]*>([\s\S]*?)<\/b>/gi;
+        var bMatch;
+        while ((bMatch = boldRegex.exec(contentArea)) !== null) {
+            boldSections.push(bMatch[1]);
+        }
+
+        if (boldSections.length > 0) {
+            // Parse each bold section as a potential server
+            for (var si = 0; si < boldSections.length; si++) {
+                var section = boldSections[si];
+                var serverName = "";
+
+                // Detect server name from section content
+                for (var pi = 0; pi < serverPatterns.length; pi++) {
+                    serverPatterns[pi].pattern.lastIndex = 0;
+                    if (serverPatterns[pi].pattern.test(section)) {
+                        serverName = serverPatterns[pi].name;
+                        break;
+                    }
+                }
+
+                // If no known server name found, try to extract text before first <a> or <br>
+                if (!serverName) {
+                    var headerMatch = section.match(/^\s*\(([^)]+)\)/);
+                    if (headerMatch) {
+                        serverName = headerMatch[1].trim();
+                    }
+                }
+
+                // Parse episode links in this section
+                var sectionEpisodes = [];
+                var sectionLinkRegex = /<a href="(https?:\/\/clbphimxua\.com\/clbpx\.html\?v=[a-zA-Z0-9_-]+)"[^>]*>([\s\S]*?)<\/a>/gi;
+                var slMatch;
+                while ((slMatch = sectionLinkRegex.exec(section)) !== null) {
+                    var epUrl = slMatch[1];
+                    var epLabel = slMatch[2].replace(/<[^>]+>/g, '').trim();
+
+                    if (!epLabel || epLabel.length === 0) {
+                        epLabel = "Phim";
+                    }
+
+                    sectionEpisodes.push({
+                        id: epUrl,
+                        name: epLabel,
+                        slug: epUrl
+                    });
+                }
+
+                if (sectionEpisodes.length > 0) {
+                    servers.push({
+                        name: serverName || ("Server " + (servers.length + 1)),
+                        episodes: sectionEpisodes
+                    });
+                }
+            }
+        }
+
+        // Fallback: if no server sections found, collect all links as one server
+        if (servers.length === 0) {
+            var episodes = [];
+            var allLinksRegex = /<a href="(https?:\/\/clbphimxua\.com\/clbpx\.html\?v=[a-zA-Z0-9_-]+)"[^>]*>([\s\S]*?)<\/a>/gi;
+            var lMatch;
+            while ((lMatch = allLinksRegex.exec(htmlResponse)) !== null) {
+                var epUrl = lMatch[1];
+                var epLabel = lMatch[2].replace(/<[^>]+>/g, '').trim();
+
+                if (!epLabel || epLabel.length === 0) {
+                    epLabel = "Phim";
+                }
+
+                episodes.push({
+                    id: epUrl,
+                    name: epLabel,
+                    slug: epUrl
+                });
             }
 
-            if (!epLabel || epLabel.length === 0) {
-                if (lMatch[2]) {
-                    epLabel = "Tập " + lMatch[2];
-                } else {
-                    epLabel = "Phim";
+            if (episodes.length === 0) {
+                // Fallback single play button (empty <a> tag with play image)
+                var playBtnRegex = /<a href="(https?:\/\/clbphimxua\.com\/clbpx\.html\?v=[a-zA-Z0-9_-]+)"[^>]*><\/a>/gi;
+                var sMatch;
+                while ((sMatch = playBtnRegex.exec(htmlResponse)) !== null) {
+                    episodes.push({
+                        id: sMatch[1],
+                        name: "Phim",
+                        slug: sMatch[1]
+                    });
                 }
             }
 
-            episodes.push({
-                id: epUrl, // WebView will load this
-                name: epLabel,
-                slug: epUrl
-            });
-            epCount++;
-        }
-
-        if (episodes.length === 0) {
-            // Fallback single play button
-            var playBtnRegex = /<a href="(https?:\/\/clbphimxua\.com\/clbpx\.html\?v=[a-zA-Z0-9_-]+)"[^>]*><img.*?src=.*?play.*?><\/a>/gi;
-            var sMatch;
-            while ((sMatch = playBtnRegex.exec(htmlResponse)) !== null) {
-                episodes.push({
-                    id: sMatch[1],
-                    name: "Phim",
-                    slug: sMatch[1]
+            if (episodes.length > 0) {
+                servers.push({
+                    name: "Thuyết Minh",
+                    episodes: episodes
                 });
             }
-        }
-
-        if (episodes.length > 0) {
-            servers.push({
-                name: "Thuyết Minh", // usually thuyet minh
-                episodes: episodes
-            });
         }
 
         return JSON.stringify({
@@ -283,12 +350,32 @@ function parseDetailResponse(htmlResponse, fallbackUrl) {
     try {
         var streamUrl = fallbackUrl || "";
 
+        // Bypass clbpx.html redirect logic
+        if (streamUrl.indexOf("clbpx.html") !== -1) {
+            var vMatch = streamUrl.match(/[?&]v=([^&#]+)/);
+            if (vMatch) {
+                var vParam = vMatch[1];
+                // Tìm domain của iframe trong htmlResponse (ví dụ: https://abysscdn.com)
+                var domainMatch = htmlResponse.match(/src="((https?:\/\/[^/]+)\/\?v=\$\{slug\})"/);
+                if (domainMatch && domainMatch[2]) {
+                    streamUrl = domainMatch[2] + "/?v=" + vParam;
+                } else if (htmlResponse.indexOf("abysscdn.com") !== -1) {
+                    // Fallback nếu regex không khớp nhưng thấy domain quen thuộc
+                    streamUrl = "https://abysscdn.com/?v=" + vParam;
+                }
+            }
+        }
+
+        var customJs = "var style = document.createElement('style');" +
+            "style.innerHTML = '#playback { display: none !important; }';" +
+            "document.head.appendChild(style);";
+
         return JSON.stringify({
             url: streamUrl,
             headers: {
                 "Referer": "https://clbphimxua.com/",
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-                "Custom-Js": `var attempt=0; var clbInt=setInterval(function(){ var b = document.querySelector('.jw-display-icon-display, .jw-display-icon-container, img[src*="play"], .play-btn, .vjs-big-play-button, div[class*="play"], button[class*="play"]'); if(b && b.offsetWidth > 0){ try{b.click();}catch(e){} } if(attempt++ > 40) clearInterval(clbInt); }, 500);`
+                "Custom-Js": customJs
             }
         });
     } catch (error) {

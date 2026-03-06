@@ -32,7 +32,7 @@
         {
             "id": "clbpx",
             "name": "CLB Phim Xưa",
-            "version": "1.0.2",
+            "version": "1.0.4",
             "scriptUrl": "https://raw.githubusercontent.com/youngbi/repo/main/plugins/clbpx_plugin.js",
             "iconUrl": "https://raw.githubusercontent.com/youngbi/repo/main/plugins/clbpx.ico"
         },
@@ -67,7 +67,7 @@
         {
             "id": "sayhentai",
             "name": "SayHentai",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "scriptUrl": "https://raw.githubusercontent.com/youngbi/repo/main/plugins/sayhentai_plugin.js",
             "iconUrl": "https://sayhentai.world/favicon-32x32.png"
         },
