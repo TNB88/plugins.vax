@@ -77,6 +77,13 @@
             "version": "1.0.0",
             "scriptUrl": "https://raw.githubusercontent.com/youngbi/repo/main/plugins/misskon_plugin.js",
             "iconUrl": "https://misskon.com/favicon.ico"
+        },
+        {
+            "id": "phim4k_vip",
+            "name": "Phim4K VIP",
+            "version": "1.0.0",
+            "scriptUrl": "https://raw.githubusercontent.com/youngbi/repo/main/plugins/phim4k_vip.js",
+            "iconUrl": "https://phim4k.com/favicon.ico"
         }
     ]
 }
