@@ -318,72 +318,15 @@ function parseDetailResponse(html, fallbackUrl) {
             url: streamUrl.replace(/&amp;/g, "&"),
             headers: {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-                "Referer": "https://sextop1.page/"
+                "Referer": "https://sextop1.page/",
+                "Allowed-Domains": "spexliu.top, streamqq.com",
+                "Custom-Js": "var attempt=0; var clbInt=setInterval(function(){var b=document.querySelector('.jw-display-icon-display, .jw-display-icon-container, img[src*=\\\"play\\\"], .play-btn, .vjs-big-play-button');if(b){try{b.click();b.style.display='none';clearInterval(clbInt);}catch(e){}}if(attempt++>20)clearInterval(clbInt);},500);"
             },
-            subtitles: [],
-            isEmbed: true,
-            embedRegex: "['\"](https?:\\/\\/[^\\s'\"]+\\.m3u8[^'\"]*)['\"]"
+            subtitles: []
         });
     } catch (e) {
         return JSON.stringify({ url: fallbackUrl || "", headers: {}, subtitles: [] });
     }
-}
-
-function unpack(code) {
-    if (!code) return "";
-    var p_match = code.match(/}\s*\('(.*)',\s*(\d+),\s*(\d+),\s*'([^']+)'\.split\('\|'\)/);
-    if (!p_match) return code;
-
-    var p = p_match[1];
-    var a = parseInt(p_match[2]);
-    var c = parseInt(p_match[3]);
-    var k = p_match[4].split('|');
-    var e = function (c) {
-        return (c < a ? '' : e(parseInt(c / a))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36));
-    };
-
-    while (c--) {
-        if (k[c]) {
-            var regex = new RegExp('\\b' + e(c) + '\\b', 'g');
-            p = p.replace(regex, k[c]);
-        }
-    }
-    return p;
-}
-
-function parseEmbedResponse(html, fallbackUrl) {
-    var finalUrl = "";
-
-    // First try to find eval code
-    var evalMatch = html.match(/eval\(function\(p,a,c,k,e,d\).*?split\('\|'\)\)\)/);
-    if (evalMatch) {
-        var unpacked = unpack(evalMatch[0]);
-        var m3u8Match = unpacked.match(/['"](https?:\/\/[^\s'"]+\.m3u8[^'"]*)['"]/);
-        if (m3u8Match) {
-            finalUrl = m3u8Match[1];
-        }
-    }
-
-    // Fallback if not eval or eval failed
-    if (!finalUrl) {
-        var m3u8Match = html.match(/['"](https?:\/\/[^\s'"]+\.m3u8[^'"]*)['"]/);
-        if (m3u8Match) {
-            finalUrl = m3u8Match[1];
-        }
-    }
-
-    // Fix escaped slashes
-    finalUrl = finalUrl.replace(/\\\//g, "/");
-
-    return JSON.stringify({
-        url: finalUrl.replace(/&amp;/g, "&"),
-        headers: {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "Referer": fallbackUrl || "https://sextop1.page/"
-        },
-        subtitles: [],
-        isEmbed: false // We already parsed it
-    });
 }
 
 function parseCategoriesResponse(html) {
