@@ -1,6 +1,6 @@
 {
-    "latestVersionCode": 26,
-    "latestVersionName": "1.2.6",
-    "releaseNotes": "- Fix lỗi các nguồn phim không tự ẩn nút play\n- Fix lỗi điều khiển trên TV\n- Thêm logic tự bỏ qua quảng cáo",
+    "latestVersionCode": 27,
+    "latestVersionName": "1.2.7",
+    "releaseNotes": "- Update và tối ưu lại app, hỗ trợ android 7\n- Fix lỗi điều khiển trên TV\n- Thêm logic tự bỏ qua quảng cáo",
     "downloadUrl": "https://raw.githubusercontent.com/youngbi/repo/main/app-release.apk"
 }
