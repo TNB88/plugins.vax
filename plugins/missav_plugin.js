@@ -138,7 +138,7 @@ function getUrlSearch(keyword, filtersJson) {
 function getUrlDetail(slug) {
     if (slug.indexOf("http") === 0) return slug;
     if (slug.indexOf("/") === 0) return "https://missav123.com" + slug;
-    return "https://missav123.com/vi/" + slug;
+    return "/vi/" + slug;
 }
 
 function getUrlCategories() { return "https://missav123.com/vi/genres"; }
