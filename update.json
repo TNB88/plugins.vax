@@ -1,6 +1,7 @@
 {
     "latestVersionCode": 28,
     "latestVersionName": "1.2.8",
-    "releaseNotes": "- Fix xoay màn dọc mất nút xoay lại\n- Update và tối ưu lại app, hỗ trợ android 7\n- Fix lỗi điều khiển trên TV",
+    "releaseNotes": "- Fix xoay màn dọc bị ẩn nút\n- Thêm dịch phụ đề tự động với nguồn phim có phụ đề\n- Fix lỗi điều khiển trên TV",
     "downloadUrl": "https://raw.githubusercontent.com/youngbi/repo/main/app-release.apk"
+
 }
