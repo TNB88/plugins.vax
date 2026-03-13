@@ -1,7 +1,8 @@
 {
-    "latestVersionCode": 28,
-    "latestVersionName": "1.2.8",
+    "latestVersionCode": 29,
+    "latestVersionName": "1.2.9",
     "releaseNotes": "- Fix xoay màn dọc bị ẩn nút\n- Thêm dịch phụ đề tự động với nguồn phim có phụ đề\n- Fix lỗi điều khiển trên TV",
     "downloadUrl": "https://raw.githubusercontent.com/youngbi/repo/main/app-release.apk"
 
 }
+
