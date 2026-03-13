@@ -38,7 +38,14 @@
         },
         {
             "id": "missav",
-            "name": "MissAV",
+            "name": "MissAV 1",
+            "version": "1.0.6",
+            "scriptUrl": "https://raw.githubusercontent.com/youngbi/repo/main/plugins/missav_plugin.js",
+            "iconUrl": "https://raw.githubusercontent.com/youngbi/repo/main/plugins/missav.ico"
+        },
+        {
+            "id": "missav",
+            "name": "MissAV 2",
             "version": "1.0.6",
             "scriptUrl": "https://raw.githubusercontent.com/youngbi/repo/main/plugins/missav_plugin.js",
             "iconUrl": "https://raw.githubusercontent.com/youngbi/repo/main/plugins/missav.ico"
