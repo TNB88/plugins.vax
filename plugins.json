@@ -25,7 +25,7 @@
         {
             "id": "hh3d",
             "name": "HH3D - Hoạt Hình 3D",
-            "version": "1.0.1",
+            "version": "1.0.3",
             "scriptUrl": "https://raw.githubusercontent.com/youngbi/repo/main/plugins/hh3d_plugin.js",
             "iconUrl": "https://raw.githubusercontent.com/youngbi/repo/main/plugins/hh3d.ico"
         },
