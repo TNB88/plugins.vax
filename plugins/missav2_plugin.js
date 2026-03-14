@@ -6,8 +6,8 @@ function getManifest() {
     return JSON.stringify({
         "id": "missav2",
         "name": "MissAV 2",
-        "version": "1.0.6",
-        "baseUrl": "https://missav.ws",
+        "version": "1.0.7",
+        "baseUrl": "https://missav.media",
         "iconUrl": "https://stpaulclinic.vn/vaapp/plugins/missav.ico",
         "isEnabled": true,
         "isAdult": true,
@@ -106,7 +106,7 @@ function getFilterConfig() {
 function getUrlList(slug, filtersJson) {
     var filters = JSON.parse(filtersJson || "{}");
     var page = filters.page || 1;
-    var baseUrl = "https://missav.ws"; // Removed trailing slash
+    var baseUrl = "https://missav.media"; // Removed trailing slash
 
     // If slug is empty (default), use 'vi/new'
     var path = slug || "vi/new";
@@ -133,16 +133,16 @@ function getUrlList(slug, filtersJson) {
 function getUrlSearch(keyword, filtersJson) {
     var filters = JSON.parse(filtersJson || "{}");
     var page = filters.page || 1;
-    return "https://missav.ws/vi/search/" + encodeURIComponent(keyword) + "?page=" + page;
+    return "https://missav.media/vi/search/" + encodeURIComponent(keyword) + "?page=" + page;
 }
 
 function getUrlDetail(slug) {
     if (slug.indexOf("http") === 0) return slug;
-    if (slug.indexOf("/") === 0) return "https://missav.ws" + slug;
-    return "https://missav.ws/vi/" + slug;
+    if (slug.indexOf("/") === 0) return "https://missav.media" + slug;
+    return "https://missav.media/vi/" + slug;
 }
 
-function getUrlCategories() { return "https://missav.ws/vi/genres"; }
+function getUrlCategories() { return "https://missav.media/vi/genres"; }
 function getUrlCountries() { return ""; } // Not supported
 function getUrlYears() { return ""; } // Not supported
 
@@ -280,7 +280,7 @@ function parseListResponse(html) {
             // Filter flags/icons just in case
             if (img.indexOf('flag') !== -1 || img.indexOf('icon') !== -1) img = "";
 
-            var slug = url.replace("https://missav.ws", "").replace("https://missav.ws/", "/");
+            var slug = url.replace("https://missav.media", "").replace("https://missav.media/", "/");
             if (slug.indexOf("/") !== 0) slug = "/" + slug;
 
             if (!foundActresses[slug]) {
@@ -710,7 +710,7 @@ function parseDetailResponse(html) {
         url: streamUrl,
         headers: {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "Referer": "https://missav.ws/"
+            "Referer": "https://missav.media/"
         },
         subtitles: []
     });
