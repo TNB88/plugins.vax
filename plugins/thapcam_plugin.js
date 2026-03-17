@@ -101,11 +101,12 @@ function getManifest() {
     return JSON.stringify({
         "id": "thapcam",
         "name": "Thập Cẩm",
-        "version": "1.0.1",
+        "version": "1.0.2",
         "baseUrl": "https://pub-26bab83910ab4b5781549d12d2f0ef6f.r2.dev",
         "iconUrl": "https://tctv.pro/10cam-logo-app-light.jpg",
         "isEnabled": true,
-        "type": "VIDEO"
+        "type": "VIDEO",
+        "layoutType": "HORIZONTAL"
     });
 }
 
