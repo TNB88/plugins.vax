@@ -1,5 +1,5 @@
 // =============================================================================
-// CONFIGURATION & METADATA 2
+// CONFIGURATION & METADATA
 // =============================================================================
 
 function getManifest() {
@@ -538,8 +538,8 @@ function parseMovieDetail(html) {
         // 1. Helper for specific HTML structure: 
         // <div class="text-secondary"><span>Label:</span> <tag>Value</tag></div>
         var getField = function (labelKey) {
-            // Match: <span>Label:</span> ... >Value</
-            var regex = new RegExp("<span>" + labelKey + ":<\\/span>[\\s\\S]*?>(.*?)<\\/div>", "i");
+            // Capture entire content between </span> and </div> (across newlines)
+            var regex = new RegExp("<span>" + labelKey + ":<\\/span>([\\s\\S]*?)<\\/div>", "i");
             var match = html.match(regex);
             if (!match) return "";
 
@@ -551,7 +551,17 @@ function parseMovieDetail(html) {
                 var text = PluginUtils.cleanText(linkMatch[2]);
                 return "[" + text + "](" + getSlug(url) + ")";
             }
-            // Fallback to text
+            // Check for <time> tag (e.g. release date)
+            var timeMatch = content.match(/<time[^>]*>([^<]+)<\/time>/i);
+            if (timeMatch) {
+                return PluginUtils.cleanText(timeMatch[1]);
+            }
+            // Check for <span class="font-medium"> (e.g. code, title)
+            var spanMatch = content.match(/<span[^>]*>([^<]+)<\/span>/i);
+            if (spanMatch) {
+                return PluginUtils.cleanText(spanMatch[1]);
+            }
+            // Fallback to text (strip all tags)
             return PluginUtils.cleanText(content.replace(/<[^>]+>/g, ""));
         };
 
