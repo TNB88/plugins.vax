@@ -6,13 +6,15 @@ function getManifest() {
     return JSON.stringify({
         "id": "avdbapi",
         "name": "AVDB JAV",
-        "version": "1.0.1",
+        "version": "1.0.0",
         "baseUrl": "https://avdbapi.com",
         "iconUrl": "https://avdbapi.com/favicon.ico",
         "isEnabled": true,
         "isAdult": true,
         "type": "VIDEO",
-        "layoutType": "HORIZONTAL"
+        "layoutType": "HORIZONTAL",
+        "playerType": "exoplayer",
+        "subtitleCat": true
     });
 }
 
