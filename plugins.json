@@ -91,6 +91,13 @@
             "version": "1.0.2",
             "scriptUrl": "https://raw.githubusercontent.com/youngbi/repo/main/plugins/thapcam_plugin.js",
             "iconUrl": "https://tctv.pro/10cam-logo-app-light.jpg"
+        },
+        {
+            "id": "avdbapi",
+            "name": "AVDB JAV",
+            "version": "1.0.0",
+            "scriptUrl": "https://raw.githubusercontent.com/youngbi/repo/main/plugins/avdbapi_plugin.js",
+            "iconUrl": "https://avdbapi.com/favicon.ico"
         }
     ]
 }
