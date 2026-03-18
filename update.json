@@ -1,6 +1,6 @@
 {
-    "latestVersionCode": 32,
-    "latestVersionName": "1.3.2",
+    "latestVersionCode": 33,
+    "latestVersionName": "1.3.3",
     "releaseNotes": "- Tối ưu và fix nhiều lỗi cho TV\n- Hỗ trợ cả chuột và điều khiển cho TV \n- Thêm chọn giao diện TV thủ công trong cài đặt",
     "downloadUrl": "https://raw.githubusercontent.com/youngbi/repo/main/app-release.apk"
 
