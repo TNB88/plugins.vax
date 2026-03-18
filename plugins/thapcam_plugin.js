@@ -17,7 +17,7 @@ function getManifest() {
 
 function getHomeSections() {
     return JSON.stringify([
-        { slug: 'live', title: '🔴 Live', type: 'Horizontal', path: 'thapcam.json' }
+        { slug: 'live', title: '🔴 Live', type: 'Grid', path: 'thapcam.json' }
     ]);
 }
 
@@ -80,7 +80,7 @@ function findChannelById(jsonStr, channelId) {
                 }
             }
         }
-    } catch (e) {}
+    } catch (e) { }
     return null;
 }
 
