@@ -1,6 +1,6 @@
 {
-    "latestVersionCode": 34,
-    "latestVersionName": "1.3.4",
-    "releaseNotes": "- Sửa các lỗi lặt vặt rồi tối đi ăn lẩu\n- Tối ưu và fix nhiều lỗi cho TV\n- Hỗ trợ cả chuột và điều khiển cho TV",
+    "latestVersionCode": 35,
+    "latestVersionName": "1.3.5",
+    "releaseNotes": "- Thêm quản lý nguồn phim trong cài đặt\n- Fix lỗi tìm kiếm trên TV\n- Fix các lỗi nhỏ khác",
     "downloadUrl": "https://raw.githubusercontent.com/youngbi/repo/main/app-release.apk"
 }
