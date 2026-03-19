@@ -98,20 +98,6 @@
             "version": "1.0.3",
             "scriptUrl": "https://raw.githubusercontent.com/youngbi/repo/main/plugins/thapcam_plugin.js",
             "iconUrl": "https://tctv.pro/10cam-logo-app-light.jpg"
-        },
-        {
-            "id": "tctv",
-            "name": "TCTV",
-            "version": "1.0.0",
-            "scriptUrl": "https://raw.githubusercontent.com/youngbi/repo/main/plugins/tctv_plugin.js",
-            "iconUrl": "https://tctv.pro/10cam-logo-app-light.jpg"
-        },
-        {
-            "id": "vbtv",
-            "name": "VeboTV",
-            "version": "1.0.0",
-            "scriptUrl": "https://raw.githubusercontent.com/youngbi/repo/main/plugins/vbtv_plugin.js",
-            "iconUrl": "https://vbtv.pro/vebo-icon.png"
         }
     ]
 }
