@@ -107,7 +107,7 @@ function parseListResponse(apiResponseJson) {
                     posterUrl: channel.image ? channel.image.url : "",
                     backdropUrl: channel.image ? channel.image.url : "",
                     year: 0,
-                    quality: "LIVE",
+                    quality: "FullHD",
                     episode_current: channel.labels && channel.labels.length > 0 ? channel.labels[0].text : "Live",
                     lang: channel.org_metadata ? (channel.org_metadata.league || "") : ""
                 });
