@@ -6,7 +6,7 @@ function getManifest() {
     return JSON.stringify({
         "id": "vmttv",
         "name": "VMT TV",
-        "version": "1.0.1",
+        "version": "1.0.0",
         "baseUrl": "https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main",
         "iconUrl": "https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/Logo.png",
         "isEnabled": true,
