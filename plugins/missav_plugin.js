@@ -208,7 +208,7 @@ function parseListResponse(html) {
         return JSON.stringify({
             items: [{
                 id: "/vi",
-                title: "⚠️ Tìm kiếm MissAV chưa hỗ trợ",
+                title: "⚠️ Tìm bằng mã code phim",
                 posterUrl: "",
                 backdropUrl: "",
                 description: "Trang tìm kiếm của MissAV sử dụng công nghệ tải động (Alpine.js + Recombee API), không thể parse từ HTML tĩnh. Vui lòng sử dụng các mục 'Thể loại', 'Hôm nay nóng', 'Mới nhất' để duyệt phim.",
