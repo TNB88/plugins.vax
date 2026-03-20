@@ -273,7 +273,7 @@ function parseMovieDetail(apiResponseJson, apiUrl) {
         return JSON.stringify({
             id: makeChannelId(channel),
             title: channel.name,
-            originName: channel.group || "",
+            originName: "",
             posterUrl: channel.logo || "",
             backdropUrl: channel.logo || "",
             description: description,
